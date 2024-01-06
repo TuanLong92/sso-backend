@@ -2,18 +2,21 @@ import passport from "passport";
 import LocalStrategy from "passport-local";
 import loginRegisterService from '../service/loginRegisterService';
 const configPassport = () =>{
-    passport.use(new LocalStrategy(async function verify(username, password, cb) {
+    passport.use(new LocalStrategy({
+
+    },
+        async (username, password, done) => {
         const rawData = {
             valueLogin: username,
             password: password
         }
         let res =await loginRegisterService.handleUserLogin(rawData);
-      //  console.log(res);
+       // console.log(res);
         if(res && +res.EC === 0){
-            return cb(null, res.DT);
+            return done(null, res.DT);
         }else
         {
-            return cb(null, false, { message: res.EM });
+            return done(null, false, { message: res.EM });
         }
        
       }));      
