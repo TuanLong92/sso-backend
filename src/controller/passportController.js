@@ -27,6 +27,10 @@ const handleLogout = (req, res, next) => {
         if (err) { return next(err); }
         res.redirect('/');
       });
+    // req.session.destroy(function(err) {
+    //     req.logout();
+    //     res.redirect('/');
+    // });
 }
 
 

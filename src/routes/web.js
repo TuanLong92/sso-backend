@@ -53,6 +53,9 @@ const initWebRoutes = (app) => {
     });
 
     router.post('/logout', passController.handleLogout);
+    
+    router.post('/verify-token', loginController.verifyToken);
+
     return app.use("/", router);
 }
 
