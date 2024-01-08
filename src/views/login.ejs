@@ -18,28 +18,31 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
       $(document).ready(function(){
-        $("#btnLogin").click(function(){
+        $("#btnLogin").on("click", function(){
           const username = $('#username').val();
           const password = $('#password').val();
+          const serviceUrl = $('#redirectURL').val();          
           $.ajax({
             type: "POST",
             url: `${window.location.origin}/login`,
-            data: {username, password},
+            data: {username, password, serviceUrl},
             withCredentials: true,
-            success: function(data){
-              window.location.href = '/';
+            success: function(data){            
+              const redirect = `${data.redirectUrl}/code?ssoToken=${data.code}`;
+             // console.log(redirectURL);
+             window.location.href = redirect;
             },
             error: function(request, status, error){
               $('#password').val('');
             }
-          })
-         
+          })         
         });
       });
       </script>
   </head>
 
   <body>
+    <input value="<%=redirectURL %>" hidden id="redirectURL"/>
     <div class="container">
       <div class="row">
         <form action="/login" method="POST">
@@ -50,8 +53,7 @@
                 <label class="form-label">Email address</label>
                 <input
                   type="email"
-                  class="form-control"
-                  name="username"
+                  class="form-control"                
                   id="username"
                 />
                 <div id="emailHelp" class="form-text">
@@ -62,8 +64,7 @@
                 <label class="form-label">Password</label>
                 <input
                   type="password"
-                  class="form-control"
-                  name="password"
+                  class="form-control"                
                   id="password"
                 />
               </div>
