@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import loginRegisterService from '../service/loginRegisterService';
 import { createJWT } from '../middleware/JWTAction';
+import 'dotenv/config';
 
 const getLoginPage = (req, res)=> {
     const serviceURL = req.query.serviceURL;
@@ -26,9 +27,22 @@ const verifyToken = async (req, res)=> {
             groupWithRoles: req.user.groupWithRoles,
             username: req.user.username,
         }
-        const acessToken = createJWT(payload);
+        const accessToken = createJWT(payload);
+
+        //set cookie
+        res.cookie('access_token', accessToken, { 
+            maxAge: +process.env.MAX_AGE_ACCESS_TOKEN,
+            httpOnly: true
+        })
+
+        res.cookie('refresh_token', refreshToken, { 
+            maxAge: +process.env.MAX_AGE_REFRESH_TOKEN,
+            httpOnly: true
+        })
+
+
         const resData = {
-            acess_token: acessToken,
+            access_token: accessToken,
             refresh_token: refreshToken,
             email: req.user.email,
             groupWithRoles: req.user.groupWithRoles,
