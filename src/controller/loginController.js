@@ -32,11 +32,15 @@ const verifyToken = async (req, res)=> {
         //set cookie
         res.cookie('access_token', accessToken, { 
             maxAge: +process.env.MAX_AGE_ACCESS_TOKEN,
+            domain: process.env.COOKIE_DOMAIN,
+            path: "/",
             httpOnly: true
         })
 
         res.cookie('refresh_token', refreshToken, { 
             maxAge: +process.env.MAX_AGE_REFRESH_TOKEN,
+            domain: process.env.COOKIE_DOMAIN,
+            path: "/",    
             httpOnly: true
         })
 

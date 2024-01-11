@@ -19,7 +19,7 @@ const initApiRoutes = (app) => {
     //rest api
     //GET - R, POST- C, PUT - U, DELETE - D
 
-    router.all('*', checkUserJWT, checkUserPermission);
+    router.all('*', checkUserJWT, checkUserPermission); //route all ap dung tat ca route ben duoi
     router.post("/register", apiController.handleRegister);
     router.post("/login", apiController.handleLogin);
     router.post("/logout", apiController.handleLogout);

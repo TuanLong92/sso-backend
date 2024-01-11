@@ -138,7 +138,7 @@ const updateUserRefreshToken = async (email, token) => {
     try {
         await db.User.update(
             { refreshToken: token },
-            { where: { email: email}} );
+            { where: { email: email.trim()}} );
     }
     catch (error) {
         console.log(error);    
