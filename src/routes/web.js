@@ -54,7 +54,33 @@ const initWebRoutes = (app) => {
 
     router.post('/logout', passController.handleLogout);
     
-    router.post('/verify-token', loginController.verifyToken);
+    router.post('/verify-token', loginController.verifySSOToken);
+
+    router.get('/auth/google',
+     passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+    router.get('/google/redirect', 
+      passport.authenticate('google', 
+        { failureRedirect: '/login' }),
+      function(req, res) {
+        // Successful authentication, redirect home.
+        //console.log(">>> check req.user" , req.user);
+        //res.redirect('/');
+        return res.render('social.ejs', { ssoToken: req.user.code});
+      });
+
+    router.get('/auth/facebook',
+    passport.authorize('facebook', { scope: ['email'] }));
+
+    router.get('/facebook/redirect', 
+      passport.authenticate('facebook', 
+        { failureRedirect: '/login' }),
+      function(req, res) {
+        // Successful authentication, redirect home.
+        //console.log(">>> check req.user" , req.user);
+        //res.redirect('/');
+        return res.render('social.ejs', { ssoToken: req.user.code});
+      });
 
     return app.use("/", router);
 }

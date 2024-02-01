@@ -37,6 +37,18 @@
             }
           })         
         });
+
+        $("#iconGoogle").on("click", function(){
+          localStorage.removeItem("clientURL");
+          localStorage.setItem("clientURL", $('#redirectURL').val());
+          window.location.href= "/auth/google";
+        });
+
+        $("#iconFacebook").on("click", function(){
+          localStorage.removeItem("clientURL");
+          localStorage.setItem("clientURL", $('#redirectURL').val());
+          window.location.href= "/auth/facebook";
+        });
       });
       </script>
   </head>
@@ -84,17 +96,16 @@
                   <span> or Login with : </span>
                 </div>
                 <div class="social" style="text-align: center">
-                  <i
-                    class="bi bi-google"
-                    style="
-                      font-size: 30px;
-                      color: green;
-                      cursor: pointer;
-                      padding: 0 15px;
-                    "
-                    title="Login with google"
-                  ></i>
-                  <i
+                  <i id="iconGoogle"
+                  class="bi bi-google"
+                  style="
+                    font-size: 30px;
+                    color: green;
+                    cursor: pointer;
+                    padding: 0 15px;
+                  "
+                  title="Login with google"></i>
+                  <i id="iconFacebook"
                     class="bi bi-facebook"
                     style="
                       font-size: 30px;
@@ -102,8 +113,7 @@
                       cursor: pointer;
                       padding: 0 10px;
                     "
-                    title="Login with Facebook"
-                  ></i>
+                    title="Login with Facebook"></i>
                 </div>
               </div>
             </fieldset>

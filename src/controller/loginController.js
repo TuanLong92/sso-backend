@@ -10,7 +10,7 @@ const getLoginPage = (req, res)=> {
     })
 };
 
-const verifyToken = async (req, res)=> {
+const verifySSOToken = async (req, res)=> {
 
     try{
         const ssoToken = req.body.ssoToken;
@@ -81,4 +81,4 @@ const verifyToken = async (req, res)=> {
     
     
 };
-module.exports = { getLoginPage, verifyToken };
+module.exports = { getLoginPage, verifySSOToken };
